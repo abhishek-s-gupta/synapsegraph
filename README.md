@@ -494,4 +494,5 @@ npm run dev
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=140&section=footer" width="100%" alt="footer" />
 
-</div>
+</div>#   s y n a p s e g r a p h  
+ 
