@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* ── React Flow base styles ── */
+@import "@xyflow/react/dist/style.css";
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* ── Glass card ── */
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+/* ── Node glow effects ── */
+.node-glow-blue:hover    { box-shadow: 0 0 20px rgba(59,130,246,0.35); }
+.node-glow-purple:hover  { box-shadow: 0 0 20px rgba(139,92,246,0.35); }
+.node-glow-green:hover   { box-shadow: 0 0 20px rgba(16,185,129,0.35); }
+.node-glow-amber:hover   { box-shadow: 0 0 20px rgba(245,158,11,0.35); }
+.node-glow-red:hover     { box-shadow: 0 0 20px rgba(239,68,68,0.35); }
+.node-glow-emerald:hover { box-shadow: 0 0 20px rgba(5,150,105,0.35); }
+
+/* ── Pulse animation ── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ── Slide in from right ── */
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.25s ease-out;
+}
+
+/* ── Fade in ── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+/* ── React Flow overrides ── */
+.react-flow__background {
+  background-color: #0f172a !important;
+}
+.react-flow__minimap {
+  background-color: #1e293b !important;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.1) !important;
+}
+.react-flow__controls {
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.1) !important;
+  overflow: hidden;
+}
+.react-flow__controls button {
+  background-color: #1e293b !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1) !important;
+  fill: #94a3b8 !important;
+}
+.react-flow__controls button:hover {
+  background-color: #334155 !important;
+}
+
+/* ── Context menu ── */
+.context-menu {
+  position: absolute;
+  z-index: 100;
+}

@@ -1,0 +1,12 @@
+{
+  "name": "synapsegraph-root",
+  "version": "2.0.0",
+  "private": true,
+  "description": "SynapseGraph — Industrial Multi-Agent Autonomous Research & Self-Healing Platform",
+  "scripts": {
+    "start": "powershell -ExecutionPolicy Bypass -File ./start.ps1",
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "backend": "cd backend && .\\.venv\\Scripts\\python -m uvicorn main:app --port 8000 --reload"
+  }
+}

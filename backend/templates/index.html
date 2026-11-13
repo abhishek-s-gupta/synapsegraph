@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SynapseGraph | Research Knowledge Graph & Multi-Agent Evolution Arena</title>
+  
+  <!-- Precision Editorial Stylesheet -->
+  <link rel="stylesheet" href="/static/css/styles.css" />
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- ==============================================================================
+       EDITORIAL TOP HEADER
+       ============================================================================== -->
+  <header class="editorial-header">
+    <div class="brand-wrapper">
+      <div class="brand-seal">SG</div>
+      <div>
+        <div class="brand-title">SynapseGraph</div>
+        <div class="brand-meta">PS 03 ResearchGraph • Self-Evolving Multi-Agent Arena</div>
+      </div>
+    </div>
+
+    <!-- Active Branch & Controls -->
+    <div class="header-controls">
+      <!-- Active Branch Dropdown -->
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <span style="font-size: 11px; color: var(--text-muted); font-weight: 600;">BRANCH:</span>
+        <select id="branch-select" class="branch-pill" style="cursor: pointer; outline: none;">
+          <option value="main">main (Production Baseline)</option>
+        </select>
+      </div>
+
+      <!-- Ingest Paper Action Button -->
+      <button id="btn-open-ingest" class="btn btn-outline" title="Ingest paper, URL, or research inquiry for claim audit">
+        + Ingest Paper / Claim
+      </button>
+
+      <!-- Fork Branch Action Button -->
+      <button id="btn-open-branch" class="btn btn-outline" title="Fork alternate hypothesis branch from current timeline step">
+        ⌥ Fork Branch From Here
+      </button>
+
+      <!-- Global Benchmark Run Button -->
+      <button id="btn-run-benchmark-global" class="btn btn-outline" title="Run local CPU benchmark simulation">
+        ▶ Run CPU Benchmark
+      </button>
+
+      <!-- 1-Click Literature Review Export Button -->
+      <button id="btn-export-review" class="btn btn-primary" title="Export citation-backed literature review markdown">
+        ↓ Export Literature Review
+      </button>
+    </div>
+  </header>
+
+  <!-- ==============================================================================
+       MAIN WORKSPACE BODY: CANVAS + AGENT DRAWER
+       ============================================================================== -->
+  <div class="workspace-body">
+    
+    <!-- LEFT: INTERACTIVE RESEARCH KNOWLEDGE GRAPH CANVAS -->
+    <main class="canvas-wrapper">
+      <div class="canvas-bg-dots"></div>
+
+      <!-- SVG Connecting Edges Layer -->
+      <svg id="graph-edges-svg" class="graph-edges-svg"></svg>
+
+      <!-- Draggable / Elevated Node Cards Layer -->
+      <div id="graph-nodes-layer" class="graph-nodes-layer">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- FEATURE 3: PAPER-TO-RUNNABLE-BENCHMARK TERMINAL DRAWER -->
+      <div id="benchmark-drawer" class="benchmark-drawer collapsed">
+        <div class="terminal-header">
+          <span>TERMINAL // CPU SANDBOX EXECUTION (10s TIMEOUT CAP)</span>
+          <button id="close-benchmark-btn" style="background:none; border:none; color:#9CA3AF; cursor:pointer; font-size:14px;">✕</button>
+        </div>
+        <div id="terminal-body" class="terminal-body">
+          [SYNAPSE_SANDBOX] Ready for execution dispatch...
+        </div>
+
+        <!-- Inline Side-by-Side Baseline Comparison Table -->
+        <div class="comparison-panel">
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 6px;">
+            Reported Paper Baseline vs. Local Reproduced Result
+          </div>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Reported Baseline</th>
+                <th>Local Reproduced</th>
+                <th>Variance Delta</th>
+                <th>Critic Audit</th>
+              </tr>
+            </thead>
+            <tbody id="comparison-table-body">
+              <!-- Populated dynamically via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FEATURE 2: BOTTOM-DOCKED TIME-TRAVEL EVOLUTION SCRUBBER -->
+      <footer class="timeline-dock">
+        <div class="timeline-header-bar">
+          <div class="timeline-title">
+            <span>⏱️ Chronological Evolution Timeline (Time-Travel Scrubber)</span>
+            <span id="active-branch-pill" class="badge badge-slate font-mono">branch: main</span>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted);">
+            Scrub backward/forward to inspect graph evolution snapshots
+          </div>
+        </div>
+
+        <div id="timeline-scrubber-track" class="timeline-scrubber-track">
+          <!-- Rendered dynamically via app.js -->
+        </div>
+      </footer>
+    </main>
+
+    <!-- RIGHT: AGENT GENETIC EVOLUTION & RETIREMENT ARENA DRAWER -->
+    <aside class="agent-drawer">
+      <div class="drawer-header">
+        <span class="drawer-title">Multi-Agent Evolution Arena</span>
+        <button id="btn-simulate-evolution" class="btn btn-amber" style="font-size: 10px; padding: 3px 8px;" title="Test scenario: Code-Gen fails twice consecutively -> Retired <60 -> Spawns Gen 2">
+          ⚡ Trigger Genetic Evolution
+        </button>
+      </div>
+
+      <div style="padding: 10px 16px; background-color: #F9FAFB; border-bottom: 1px solid var(--border-hairline); font-size: 11px; color: var(--text-muted);">
+        Baseline score: <strong>80/100</strong>. Success (+3), Auto-Fix (+5), Crash (-3). Agents dropping below <strong>60</strong> are automatically retired and replaced.
+      </div>
+
+      <!-- Agent Cards Roster -->
+      <div id="agent-roster-list" style="display: flex; flex-direction: column;">
+        <!-- Rendered dynamically via app.js -->
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ==============================================================================
+       MODAL: INGEST PAPER & RED-TEAM AUDIT
+       ============================================================================== -->
+  <div id="ingest-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 16px; font-weight: 700;">Ingest Research Paper, URL or Claim</h3>
+        <button id="close-ingest-btn" style="background:none; border:none; cursor:pointer; font-size:16px;">✕</button>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <label style="display: block; font-size: 11.5px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">
+          Paper URL or arXiv Identifier:
+        </label>
+        <input id="ingest-source-url" type="text" class="btn-outline" style="width: 100%; padding: 8px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;" value="https://arxiv.org/abs/2403.11902" />
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 11.5px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">
+          Abstract Snippet / Core Methodology Claim:
+        </label>
+        <textarea id="ingest-input-text" rows="4" style="width: 100%; padding: 8px 10px; border: 1px solid var(--border-hairline); border-radius: 4px; font-family: var(--font-sans); font-size: 12.5px; resize: vertical;">MicroAttention INT4 Quantized Transformers for Vibration Anomaly Detection: Claims +14.2% F1 score over standard baselines with 16.0ms latency on Cortex-M CPUs without pruning.</textarea>
+      </div>
+
+      <div style="background-color: var(--amber-soft-bg); border: 1px solid var(--amber-border); padding: 10px 12px; border-radius: 4px; margin-bottom: 18px; font-size: 11.5px; color: var(--amber-text);">
+        <strong>Adversarial Audit Notice:</strong> Reader Agent will parse claims and datasets; Red-Team Critic Agent will automatically evaluate numerical claims for missing hyperparameters or dataset distribution biases.
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button id="submit-ingest-btn" class="btn btn-primary" style="padding: 7px 16px;">
+          Run Ingestion & Red-Team Audit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================================
+       MODAL: FORK BRANCH FROM TIMELINE MILESTONE
+       ============================================================================== -->
+  <div id="branch-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 16px; font-weight: 700;">⌥ Fork Alternate Hypothesis Branch</h3>
+        <button id="close-branch-btn" style="background:none; border:none; cursor:pointer; font-size:16px;">✕</button>
+      </div>
+
+      <p id="branch-modal-sub" style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px;">
+        Forking from branch at current snapshot milestone.
+      </p>
+
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 11.5px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">
+          New Branch Name:
+        </label>
+        <input id="new-branch-name" type="text" class="btn-outline" style="width: 100%; padding: 8px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 12px;" value="branch-fp16-unquantized" />
+      </div>
+
+      <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px 12px; border-radius: 4px; margin-bottom: 18px; font-size: 11.5px; color: var(--text-secondary);">
+        Git-style branching creates a detached hypothesis graph copy. You can experiment with alternative models, quantization levels, or pruning schemes without overwriting your main research lineage.
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button id="confirm-branch-btn" class="btn btn-primary" style="padding: 7px 16px;">
+          Confirm & Switch to Branch
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Script -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
