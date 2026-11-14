@@ -603,7 +603,7 @@ Built to make scientific research more connected, reproducible, and accessible.
 
 <div align="center">
 
-### [Abhishek Gupta](https://github.com/abhishek-s-gupta)
+### [Abhishek Gupta](https://github.com/abhishek-s-gupta)(https://www.linkedin.com/in/abhishek-s-gupta)
 
 *Built with ❤️ for modern autonomous scientific research.*
 
